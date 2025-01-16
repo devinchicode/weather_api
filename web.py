@@ -1,5 +1,4 @@
 from datetime import date, timedelta
-import requests
 from flask import Flask, render_template, request
 from backend_weather import GeoData
 
@@ -15,17 +14,18 @@ def get_location():
 def weather():
 	city = request.form["city"]
 	amount_of_days = request.form["forecast_days"]
-	data = GeoData(city, int(amount_of_days))
+	backend = GeoData(city, int(amount_of_days))
 
-	if "error" in data.parameters:
-		error_message = data.parameters["error"]["message"]
+	if "error" in backend.json_response:
+
+		error_message = backend.json_response["error"]["message"]
 		continue_message = "Press button below to return home and search again"
-		return render_template('error.html', error_message=error_message, continue_message=continue_message), data.status_code
+		
+		return render_template('error.html', error_message=error_message, continue_message=continue_message),
+		backend.status_code
 
-	return render_template('weather.html',
-	icon=data.icon, image=data.image, location=data.location,
-	days=data.days, min_temp=data.min_temp, max_temp=data.max_temp,
-	avg_temp=data.avg_temp, humidity=data.humidity, amount_of_days=data.amount_of_days, current=data.current)
+
+	return render_template('weather.html', data=backend.data, amount_of_days=int(amount_of_days)), backend.status_code
 
 
 @app.errorhandler(404)
