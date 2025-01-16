@@ -24,5 +24,11 @@ def weather():
 
 	return render_template('weather.html', icon=data.icon, image=data.image, location=data.location, days=data.days, min_temp=data.min_temp, max_temp=data.max_temp, avg_temp=data.avg_temp, humidity=data.humidity, amount_of_days=data.AMOUNT_OF_DAYS, current=data.current)
 
+@app.errorhandler(404)
+def page_not_found(error_message):
+	continue_message = "Press button below to return home and search for forecast"
+	return render_template('error.html', error_message=error_message, continue_message=continue_message), 404
+
+
 if __name__ == "__main__":
 	app.run()
