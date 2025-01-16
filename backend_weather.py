@@ -99,6 +99,4 @@ class GeoData():
 
 		else:
 			self.image = sunny_image
-
-		return None
 	
