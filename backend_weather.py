@@ -39,12 +39,15 @@ class GeoData():
 
 	def parse_api_values(self) -> None:	
 		"""
+		in for loop:
 		parse the json json_response into self.data,
 		each list for specific json_response,
 		index in each list order by days,
 		i.e every index [0] in whole lists will be current day,
 		every index [1] in whole lists will be tommorow, etc...
 		"""
+
+		# TODO: move for other function and explain
 		self.data["current"].append(self.json_response["current"]["temp_c"])
 		self.data["current"].append(self.json_response["forecast"]["forecastday"][0]["day"]["condition"]["text"])
 		self.data["location"].append(self.json_response["location"]["name"])
@@ -66,9 +69,12 @@ class GeoData():
 		"""
 		current_date = date.today()
 
+		# sets relevant days in the list
 		for i in range(self.amount_of_days):
-			self.data["days"].append(current_date + timedelta(i))
+			self.data["days"].append(current_date + timedelta(days=i))
 
+
+		# convert the date to weekday name i.e Sunday, Monday etc...
 		for i in range(self.amount_of_days):
 			self.data["days"][i] = self.data["days"][i].strftime("%A")
 
@@ -85,19 +91,8 @@ class GeoData():
 		"""
 		background for weather.html depend on state in user location input
 		"""
-	
-		with open("background/snow.txt", "r") as snow:
-			snow_image = snow.read()
-
-		with open("background/rainy.txt", "r") as rainy:
-			rainy_image = rainy.read()
-
-		with open("background/cloudy.txt", "r") as cloudy:
-			cloudy_image = cloudy.read()
-
-		with open("background/sunny.txt", "r") as sunny:
-			sunny_image = sunny.read()
-
+		
+		snow_image, rainy_image, cloudy_image, sunny_image = self.load_links()
 		state = self.json_response["forecast"]["forecastday"][0]["day"]["condition"]["text"]
 	
 		if "rain" in state:
@@ -111,4 +106,21 @@ class GeoData():
 
 		else:
 			self.data["image"] = sunny_image
-	
+
+
+	@staticmethod
+	def load_links() -> None:
+		
+		with open("background/snow.txt", "r") as snow:
+			snow_image = snow.read()
+
+		with open("background/rainy.txt", "r") as rainy:
+			rainy_image = rainy.read()
+
+		with open("background/cloudy.txt", "r") as cloudy:
+			cloudy_image = cloudy.read()
+
+		with open("background/sunny.txt", "r") as sunny:
+			sunny_image = sunny.read()
+
+		return snow_image, rainy_image, cloudy_image, sunny_image
