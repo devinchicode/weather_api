@@ -3,14 +3,14 @@
 
 <head>
 	<title>weather</title>
-	<link rel="icon" type="image/x-icon" href="{{icon[0]}}">
+	<link rel="icon" type="image/x-icon" href="{{ data["icon"][0] }}">
 </head>
 
 <a href="/"><img src="https://cdn-icons-png.flaticon.com/256/9713/9713317.png" width="100", height="100", ></a>
 
 <style>
 	body {
-	background-image: url({{ image }});
+	background-image: url({{ data["image"] }});
 	}
 </style>
 
@@ -21,8 +21,8 @@
 		<table style="border-collapse: collapse; width: auto; margin-left: auto; margin-right: auto; text-align: center;" border="5", cellpadding="5">
   			
 			<thead style="color:white; background-color: #000000;">
-			<th colspan="{{ amount_of_days+1 }}">weather in: {{ location[1] }}, {{ location [0] }} 
-			<br>current temperature: {{ current[0] }}°,  {{ current[1] }} <img src="{{ icon[0] }}", width="30", height="30"></th>
+			<th colspan="{{ amount_of_days+1 }}">weather in: {{ data["location"][1] }}, {{ data["location"][0] }} 
+			<br>current temperature: {{ data["current"][0] }}°,  {{ data["current"][1] }} <img src="{{ data["icon"][0] }}", width="30", height="30"></th>
 			</thead>
 
 			<tbody>
@@ -30,35 +30,35 @@
 				<tr style="border: 2px solid black; background-color: #FFFFFF;">
       			<th scope="col"><img src="https://cdn-icons-png.flaticon.com/256/648/648198.png" width="30", height="30"></th>
 	  			{% for i in range(amount_of_days) %}
-	     		<th style="border: 2px solid black;" scope="col"> {{ days[i] }} <img src="{{icon[i]}}", width="30", height="30"></th>
+	     		<th style="border: 2px solid black;" scope="col"> {{ data["days"][i] }} <img src="{{ data["icon"][i]}}", width="30", height="30"></th>
 	  			{% endfor %}
     			</tr>
 
     			<tr style="border: 2px solid black;">
       				<th style="border: 2px solid black; background-color: #FFFFFF;"scope="row">Min Temperature</th>
 					{% for i in range(amount_of_days) %}
-      				<td style="border: 2px solid black; background-color: #708E99;">{{ min_temp[i] }}°</td>
+      				<td style="border: 2px solid black; background-color: #708E99;">{{ data["min_temp"][i] }}°</td>
 					{% endfor %}
 				</tr>
 
  				<tr style="border: 2px solid black;">
       				<th style="border: 2px solid black; background-color: #FFFFFF;" scope="row">Max Temperature</th>  
 					{% for i in range(amount_of_days) %}
-	  				<td style="border: 2px solid black; background-color: #708E99;">{{ max_temp[i] }}°</td>
+	  				<td style="border: 2px solid black; background-color: #708E99;">{{ data["max_temp"][i] }}°</td>
 					{% endfor %}
     			</tr>
 
     			<tr style="border: 2px solid black;">
       				<th style="border: 2px solid black; background-color: #FFFFFF;" scope="row">Avarage Temperature</th>  
 					{% for i in range(amount_of_days) %}
-	  				<td style="border: 2px solid black; background-color: #708E99;">{{ avg_temp[i] }}°</td>
+	  				<td style="border: 2px solid black; background-color: #708E99;">{{ data["avg_temp"][i] }}°</td>
 	  				{% endfor %}
     			</tr>
 
 	 			<tr style="border: 2px solid black;">
       				<th style="border: 2px solid black; background-color: #FFFFFF" scope="row">Avarage Humidity</th>
 					{% for i in range(amount_of_days) %}
-	 				<td style="border: 2px solid black; background-color: #708E99;">{{ humidity[i] }}%</td>
+	 				<td style="border: 2px solid black; background-color: #708E99;">{{ data["humidity"][i] }}%</td>
     				{% endfor %}
 				</tr>
 
@@ -66,7 +66,7 @@
 		</table>
 
 		<script src="https://cdn.logwork.com/widget/text.js"></script>
-		<a href="https://logwork.com/current-time" class="clock-widget-text" data-width="760" data-timezone="{{ location[2] }}" data-language="en" data-textcolor="#ffffff" data-background="#000000" data-digitscolor="#ffffff">{{ location[0] }}</a>
+<a href="https://logwork.com/current-time" class="clock-widget-text" data-width="760" data-timezone="{{data["location"][2]}}" data-language="en" data-textcolor="#ffffff" data-background="#000000" data-digitscolor="#ffffff">{{data["location"][0] }}</a>
 
 
 	</center>
