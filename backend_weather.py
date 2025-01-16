@@ -81,16 +81,19 @@ class GeoData():
 		"""
 		background for weather.html depend on state in user location input
 		"""
+	
+		with open("background/snow.txt", "r") as snow:
+			snow_image = snow.read()
 
+		with open("background/rainy.txt", "r") as rainy:
+			rainy_image = rainy.read()
 
-		snow_image = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/783a8afb-3bb2-4d9f-b81e-0f0a4ecce927/d4h55ea-2d48d5ab-704d-4efe-97dc-2e594087969e.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzc4M2E4YWZiLTNiYjItNGQ5Zi1iODFlLTBmMGE0ZWNjZTkyN1wvZDRoNTVlYS0yZDQ4ZDVhYi03MDRkLTRlZmUtOTdkYy0yZTU5NDA4Nzk2OWUuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.CPIGkrjjdCcy_ZOSFSNUszHlEPtjQN6KXKrU3euaJH8"
+		with open("background/cloudy.txt", "r") as cloudy:
+			cloudy_image = cloudy.read()
 
-		rainy_image = "https://cdna.artstation.com/p/assets/images/images/025/801/090/original/sean-lewis-sean-lewis-toonorth-loop-1000px.gif?1586964127"
-		
-		cloudy_image = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/2530d3be-5b7d-4ce9-b28f-63520c8b7042/d7y567t-9072c940-5cda-4f1b-bab5-1bf98bc1ed9e.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzI1MzBkM2JlLTViN2QtNGNlOS1iMjhmLTYzNTIwYzhiNzA0MlwvZDd5NTY3dC05MDcyYzk0MC01Y2RhLTRmMWItYmFiNS0xYmY5OGJjMWVkOWUuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.w72UWJFjMp1wvdUD5P6k87xe3sN0DZEWDB7z5nhhs9w"
-		
-		sunny_image = "https://i.pinimg.com/originals/17/00/09/170009ce70039c9a6c900f9e61759d88.gif"
-		
+		with open("background/sunny.txt", "r") as sunny:
+			sunny_image = sunny.read()
+
 		state = self.parameters["forecast"]["forecastday"][0]["day"]["condition"]["text"]
 	
 		if "rain" in state:
