@@ -6,7 +6,7 @@ class GeoData():
 		self.city = city
 		self.amount_of_days = amount_of_days
 		self.status_code = 0
-		self.json_response = []
+		self.json_response = {}
 		self.get_api_values()
 		
 		if "error" in self.json_response:
@@ -28,6 +28,10 @@ class GeoData():
 
 
 	def get_api_values(self) -> None:
+		""" 
+		fetches the API data for the given city and number of days,
+		stores the response JSON in self.json_response.
+		"""
 		api = Weather_API(self.city, self.amount_of_days)
 		self.json_response = api.get_api_json()
 		self.status_code = api.status_code
@@ -35,7 +39,7 @@ class GeoData():
 
 	def parse_api_values(self) -> None:	
 		"""
-		parse the json json_response into lists,
+		parse the json json_response into self.data,
 		each list for specific json_response,
 		index in each list order by days,
 		i.e every index [0] in whole lists will be current day,
