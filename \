@@ -1,0 +1,11 @@
+import requests
+
+ksp_url = "https://auth.ksp.co.il/api/login"
+headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'}
+data = {'email':'shhdfhdh@gmail.com',
+		'password':'1234556'}
+
+#get_back = requests.post(ksp_url, headers=headers, data=data)
+get_back = requests.post(ksp_url, data=data)
+
+print(get_back.content())
