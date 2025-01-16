@@ -6,7 +6,7 @@ class GeoData():
 		self.CITY = city
 		self.AMOUNT_OF_DAYS = amount_of_days
 		self.status_code = 0
-		self.parameters = self.get_parameters()
+		self.parameters = self.get_api_values()
 		
 		if "error" in self.parameters:
 			return
@@ -21,12 +21,12 @@ class GeoData():
 		self.image = ""
 		self.days = []
 
-		self.append_values()
-		self.weekdays_name()
-		self.get_image()
+		self.collect_api_values()
+		self.string_format_weekdays()
+		self.get_background_image()
 
 
-	def get_parameters(self) -> dict:
+	def get_api_values(self) -> dict:
 
 		with open("api_key.txt", "r") as file:
 			API_KEY = file.readline()
@@ -40,7 +40,7 @@ class GeoData():
 		return parameters
 
 
-	def append_values(self) -> None:	
+	def collect_api_values(self) -> None:	
 
 		self.current.append(self.parameters["current"]["temp_c"])
 		self.current.append(self.parameters["forecast"]["forecastday"][0]["day"]["condition"]["text"])
@@ -56,7 +56,7 @@ class GeoData():
 			self.icon.append(self.parameters["forecast"]["forecastday"][i]["day"]["condition"]["icon"])
 
 
-	def weekdays_name(self) -> None:
+	def string_format_weekdays(self) -> None:
 		
 		current_date = date.today()
 
@@ -74,7 +74,7 @@ class GeoData():
 			return
 
 
-	def get_image(self) -> None:
+	def get_background_image(self) -> None:
 		
 		snow_image = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/783a8afb-3bb2-4d9f-b81e-0f0a4ecce927/d4h55ea-2d48d5ab-704d-4efe-97dc-2e594087969e.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzc4M2E4YWZiLTNiYjItNGQ5Zi1iODFlLTBmMGE0ZWNjZTkyN1wvZDRoNTVlYS0yZDQ4ZDVhYi03MDRkLTRlZmUtOTdkYy0yZTU5NDA4Nzk2OWUuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.CPIGkrjjdCcy_ZOSFSNUszHlEPtjQN6KXKrU3euaJH8"
 
