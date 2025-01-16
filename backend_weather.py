@@ -1,12 +1,13 @@
 from datetime import date, timedelta
-import requests
+from api_request import Weather_API
 
 class GeoData():
 	def __init__(self, city: str, amount_of_days: int):
-		self.CITY = city
-		self.AMOUNT_OF_DAYS = amount_of_days
+		self.city = city
+		self.amount_of_days = amount_of_days
 		self.status_code = 0
-		self.parameters = self.get_api_values()
+		self.parameters = []
+		self.get_api_values()
 		
 		if "error" in self.parameters:
 			return
@@ -26,29 +27,27 @@ class GeoData():
 		self.get_background_image()
 
 
-	def get_api_values(self) -> dict:
-
-		with open("api_key.txt", "r") as file:
-			API_KEY = file.readline()
-
-		url = f"http://api.weatherapi.com/v1/forecast.json?key={API_KEY}&q={self.CITY}&days={self.AMOUNT_OF_DAYS}&aqi=no&alerts=no"
-		get_back = requests.get(url)
-		parameters = get_back.json()
-		self.status_code = get_back.status_code
-		
-
-		return parameters
+	def get_api_values(self) -> None:
+		api = Weather_API(self.city, self.amount_of_days)
+		self.parameters = api.get_api_json()
+		self.status_code = api.status_code
 
 
 	def parse_api_values(self) -> None:	
-
+		"""
+		parse the json parameters into lists,
+		each list for specific parameters,
+		index in each list order by days,
+		i.e every index [0] in whole lists will be current day,
+		every index [1] in whole lists will be tommorow, etc...
+		"""
 		self.current.append(self.parameters["current"]["temp_c"])
 		self.current.append(self.parameters["forecast"]["forecastday"][0]["day"]["condition"]["text"])
 		self.location.append(self.parameters["location"]["name"])
 		self.location.append(self.parameters["location"]["country"])
 		self.location.append(self.parameters["location"]["tz_id"])
     	
-		for i in range(self.AMOUNT_OF_DAYS):
+		for i in range(self.amount_of_days):
 			self.min_temp.append(self.parameters["forecast"]["forecastday"][i]["day"]["mintemp_c"])
 			self.max_temp.append(self.parameters["forecast"]["forecastday"][i]["day"]["maxtemp_c"])
 			self.avg_temp.append(self.parameters["forecast"]["forecastday"][i]["day"]["avgtemp_c"])
@@ -57,13 +56,16 @@ class GeoData():
 
 
 	def string_format_weekdays(self) -> None:
-		
+		"""
+		api returns date,
+		thats function make it human readable and return weekdays for client in weather.html
+		"""
 		current_date = date.today()
 
-		for i in range(self.AMOUNT_OF_DAYS):
+		for i in range(self.amount_of_days):
 			self.days.append(current_date + timedelta(i))
 
-		for i in range(self.AMOUNT_OF_DAYS):
+		for i in range(self.amount_of_days):
 			self.days[i] = self.days[i].strftime("%A")
 
 		self.days[0] = "Today"
@@ -76,6 +78,11 @@ class GeoData():
 
 	def get_background_image(self) -> None:
 		
+		"""
+		background for weather.html depend on state in user location input
+		"""
+
+
 		snow_image = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/783a8afb-3bb2-4d9f-b81e-0f0a4ecce927/d4h55ea-2d48d5ab-704d-4efe-97dc-2e594087969e.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzc4M2E4YWZiLTNiYjItNGQ5Zi1iODFlLTBmMGE0ZWNjZTkyN1wvZDRoNTVlYS0yZDQ4ZDVhYi03MDRkLTRlZmUtOTdkYy0yZTU5NDA4Nzk2OWUuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.CPIGkrjjdCcy_ZOSFSNUszHlEPtjQN6KXKrU3euaJH8"
 
 		rainy_image = "https://cdna.artstation.com/p/assets/images/images/025/801/090/original/sean-lewis-sean-lewis-toonorth-loop-1000px.gif?1586964127"
