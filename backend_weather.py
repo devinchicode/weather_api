@@ -21,7 +21,7 @@ class GeoData():
 		self.image = ""
 		self.days = []
 
-		self.collect_api_values()
+		self.parse_api_values()
 		self.string_format_weekdays()
 		self.get_background_image()
 
@@ -40,7 +40,7 @@ class GeoData():
 		return parameters
 
 
-	def collect_api_values(self) -> None:	
+	def parse_api_values(self) -> None:	
 
 		self.current.append(self.parameters["current"]["temp_c"])
 		self.current.append(self.parameters["forecast"]["forecastday"][0]["day"]["condition"]["text"])
