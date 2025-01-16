@@ -21,11 +21,10 @@ def weather():
 		error_message = backend.json_response["error"]["message"]
 		continue_message = "Press button below to return home and search again"
 		
-		return render_template('error.html', error_message=error_message, continue_message=continue_message),
-		backend.status_code
+		return render_template('error.html', error_message=error_message, continue_message=continue_message)
 
 
-	return render_template('weather.html', data=backend.data, amount_of_days=int(amount_of_days)), backend.status_code
+	return render_template('weather.html', data=backend.data, amount_of_days=int(amount_of_days))
 
 
 @app.errorhandler(404)
