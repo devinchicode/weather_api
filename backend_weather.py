@@ -28,8 +28,6 @@ class GeoData():
 
 	def get_parameters(self) -> dict:
 
-		API_KEY = ""
-
 		with open("api_key.txt", "r") as file:
 			API_KEY = file.readline()
 
